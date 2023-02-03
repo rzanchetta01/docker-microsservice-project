@@ -1,0 +1,33 @@
+version: "3.8"
+services:
+    rabbitmq3:
+        container_name: "rabbitmq"
+        image: rabbitmq:3.8-management-alpine
+        environment:
+            - RABBITMQ_DEFAULT_USER=myuser
+            - RABBITMQ_DEFAULT_PASS=mypassword
+        ports:
+            # AMQP protocol port
+            - '5672:5672'
+            # HTTP management UI
+            - '15672:15672'
+    user-house:
+        container_name: "user-house"
+        image: "user-house-ms"
+        ports:
+            - '8081:8081'
+    api-gateway:
+        container_name: "api-gateway"
+        image: "api-ms"
+        ports:
+            - '8082:8082'
+    mongodb:
+        container_name: "mongodb"
+        image: "mongo:latest"
+        ports:
+            - "27017:27017"
+    frontend:
+        container_name: "web-app"
+        image: "web-ms"
+        ports:
+            - "8083:80"
