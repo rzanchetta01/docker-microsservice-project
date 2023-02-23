@@ -13,12 +13,7 @@ import java.util.Optional;
 public class UserService implements IUserService<UserCustomer> {
 
     @Autowired
-    private final UserRepository repository;
-
-    public UserService(UserRepository repository) {
-        //TODO DEPENDENCY INJECTION
-        this.repository = repository;
-    }
+    private UserRepository repository;
 
     @Override
     public Collection<UserCustomer> getAll() {
