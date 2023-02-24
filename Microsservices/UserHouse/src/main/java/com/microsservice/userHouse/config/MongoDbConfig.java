@@ -4,6 +4,7 @@ import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
@@ -17,12 +18,25 @@ import java.util.Collections;
 public class MongoDbConfig extends AbstractMongoClientConfiguration {
     @Override
     protected String getDatabaseName() {
-        return "sisdbmain";
+        return dbName;
+    }
+
+    @Value("${spring.data.mongodb.database}")
+    private String dbName;
+
+    @Value("${spring.data.mongodb.host}")
+    private String host;
+
+    @Value("${spring.data.mongodb.port}")
+    private String port;
+
+    private String getConnectionString() {
+        return "mongodb://" + host + ":" + port + "/" + getDatabaseName();
     }
 
     @Override
     public MongoClient mongoClient () {
-        final ConnectionString connectionString = new ConnectionString("mongodb://localhost:27017/" + getDatabaseName());
+        final ConnectionString connectionString = new ConnectionString(getConnectionString());
 
         final MongoClientSettings mongoClientSettings = MongoClientSettings.builder()
                 .applyConnectionString(connectionString)
