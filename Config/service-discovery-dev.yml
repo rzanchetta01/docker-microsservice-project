@@ -12,7 +12,7 @@ eureka:
       true
     serviceUrl:
       defaultZone:
-        http://${eureka.instance.hostname}:{server.port}/eureka/
+        http://${eureka.instance.hostname}:${server.port}/eureka/
   server:
     wait-time-in-ms-when-sync-empty:
       3000
